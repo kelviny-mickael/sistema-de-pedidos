@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bloco de Pedidos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #111111;
+      --white: #ffffff;
+      --gray: #f5f5f3;
+      --border: #d0d0cc;
+      --accent: #111111;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--gray);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 16px 60px;
+    }
+
+    /* TOP NAV */
+    .topbar {
+      width: 100%;
+      max-width: 720px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .topbar-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      color: var(--black);
+    }
+
+    .btn-ver {
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      padding: 10px 22px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-ver:hover { background: #333; }
+
+    /* CARD / BLOCK */
+    .bloco {
+      width: 100%;
+      max-width: 720px;
+      background: var(--white);
+      box-shadow: 0 4px 40px rgba(0,0,0,0.10);
+      overflow: hidden;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HEADER WAVE */
+    .bloco-header {
+      background: var(--black);
+      position: relative;
+      height: 90px;
+      display: flex;
+      align-items: flex-start;
+      padding: 18px 32px 0;
+    }
+
+    .bloco-header::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0; right: 0;
+      height: 44px;
+      background: var(--white);
+      border-radius: 50% 80% 0 0 / 44px 44px 0 0;
+    }
+
+    /* TITLE ROW */
+    .title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 32px 10px;
+    }
+
+    .nota-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--black);
+      letter-spacing: -0.01em;
+    }
+
+    .brand-box {
+      border: 2px solid var(--black);
+      padding: 8px 18px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--white);
+    }
+
+    /* FORM FIELDS */
+    .fields {
+      padding: 10px 32px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .field-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      color: #555;
+    }
+
+    .field-input {
+      border: none;
+      border-bottom: 1.5px solid var(--black);
+      outline: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.97rem;
+      padding: 6px 2px;
+      background: transparent;
+      color: var(--black);
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+    .field-input:focus { border-color: #555; }
+
+    .fields-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* TABLE */
+    .table-wrap {
+      padding: 8px 32px 24px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    thead th {
+      background: var(--black);
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 10px 10px;
+      text-align: left;
+    }
+
+    thead th:first-child { width: 80px; }
+    thead th:nth-child(3) { width: 100px; }
+    thead th:nth-child(4) { width: 110px; }
+
+    tbody td {
+      border: 1px solid var(--border);
+      padding: 0;
+    }
+
+    tbody td input {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      padding: 9px 10px;
+      background: transparent;
+      color: var(--black);
+    }
+
+    /* TOTAL ROW */
+    .total-row {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0;
+      margin: 0 32px 0;
+    }
+
+    .total-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 12px 16px;
+      background: var(--gray);
+      border: 1px solid var(--border);
+      border-right: none;
+    }
+
+    .total-value {
+      min-width: 130px;
+      padding: 12px 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: 1px solid var(--black);
+      background: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--black);
+      text-align: right;
+    }
+
+    /* OBS */
+    .obs-wrap {
+      padding: 18px 32px 0;
+    }
+
+    .obs-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      color: #888;
+      margin-bottom: 5px;
+    }
+
+    .obs-input {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      outline: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      padding: 8px 10px;
+      color: var(--black);
+      background: transparent;
+      resize: none;
+      height: 56px;
+      transition: border-color 0.2s;
+    }
+    .obs-input:focus { border-color: var(--black); }
+
+    /* ACTIONS */
+    .actions {
+      display: flex;
+      gap: 12px;
+      padding: 22px 32px 32px;
+    }
+
+    .btn-salvar {
+      flex: 1;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      padding: 14px 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-salvar:hover { background: #333; }
+    .btn-salvar:active { transform: scale(0.98); }
+
+    .btn-imprimir {
+      flex: 1;
+      background: transparent;
+      color: var(--black);
+      border: 2px solid var(--black);
+      padding: 14px 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.1s;
+    }
+    .btn-imprimir:hover { background: var(--black); color: var(--white); }
+    .btn-imprimir:active { transform: scale(0.98); }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(60px);
+      background: var(--black);
+      color: var(--white);
+      padding: 12px 28px;
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(.4,0,.2,1);
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 999;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ADD ROW BTN */
+    .add-row-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+      padding: 8px 0 0 2px;
+      display: block;
+      transition: color 0.2s;
+    }
+    .add-row-btn:hover { color: var(--black); }
+
+    /* ═══════════════════════════════════════════════════
+       IMPRESSÃO — ELGIN i8 (bobina 79,5 mm, 203 DPI)
+       Área útil ≈ 72 mm | Fonte mínima legível ≈ 7–8pt
+       Impressora térmica: SEM gradientes, só preto/branco
+    ═══════════════════════════════════════════════════ */
+    @media print {
+      @page {
+        size: 80mm auto;
+        margin: 4mm 3mm 8mm 3mm;
+      }
+
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        box-shadow: none !important;
+        animation: none !important;
+      }
+
+      body {
+        background: #fff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        font-family: 'Courier New', Courier, monospace !important;
+        font-size: 8pt !important;
+        width: 72mm !important;
+      }
+
+      /* Ocultar interface */
+      .topbar, .actions, .add-row-btn { display: none !important; }
+
+      .bloco {
+        width: 72mm !important;
+        max-width: 72mm !important;
+        box-shadow: none !important;
+      }
+
+      /* Cabeçalho preto (funciona em térmica) */
+      .bloco-header {
+        background: #000 !important;
+        height: 28px !important;
+        padding: 6px 8px 0 !important;
+      }
+      .bloco-header::after { display: none !important; }
+
+      /* Título e brand */
+      .title-row {
+        padding: 6px 8px 4px !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .nota-title {
+        font-size: 11pt !important;
+        font-family: 'Courier New', Courier, monospace !important;
+      }
+
+      .brand-box {
+        font-size: 8pt !important;
+        padding: 3px 6px !important;
+        border: 1.5px solid #000 !important;
+      }
+
+      /* Campos */
+      .fields {
+        padding: 4px 8px 6px !important;
+        gap: 4px !important;
+      }
+
+      .field-label {
+        font-size: 6.5pt !important;
+        letter-spacing: 0 !important;
+      }
+
+      .field-input {
+        font-size: 8pt !important;
+        padding: 2px 0 !important;
+        border-bottom: 1px solid #000 !important;
+        font-family: 'Courier New', Courier, monospace !important;
+      }
+
+      .fields-row {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+      }
+
+      /* Separador */
+      .fields::after {
+        content: '--------------------------------';
+        display: block;
+        font-size: 7pt;
+        letter-spacing: -1px;
+        margin-top: 4px;
+        font-family: 'Courier New', monospace;
+        color: #000;
+      }
+
+      /* Tabela */
+      .table-wrap {
+        padding: 2px 8px 4px !important;
+      }
+
+      table {
+        width: 100% !important;
+        font-size: 7.5pt !important;
+        font-family: 'Courier New', Courier, monospace !important;
+        table-layout: fixed !important;
+      }
+
+      thead th:nth-child(1) { width: 10mm; }
+      thead th:nth-child(2) { width: 30mm; }
+      thead th:nth-child(3) { width: 14mm; }
+      thead th:nth-child(4) { width: 16mm; }
+
+      thead th {
+        background: #000 !important;
+        color: #fff !important;
+        font-size: 6.5pt !important;
+        padding: 2px 2px !important;
+        letter-spacing: 0 !important;
+        border: none !important;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      tbody td {
+        border: none !important;
+        border-bottom: 1px dotted #aaa !important;
+        padding: 2px 2px !important;
+        font-size: 7.5pt !important;
+        word-break: break-word;
+      }
+
+      /* Total */
+      .total-row {
+        margin: 3px 8px 0 !important;
+        border-top: 2px solid #000 !important;
+        padding-top: 3px !important;
+      }
+
+      .total-label {
+        font-size: 8pt !important;
+        font-weight: bold !important;
+        background: none !important;
+        border: none !important;
+        padding: 0 4px 0 0 !important;
+      }
+
+      .total-value {
+        font-size: 9pt !important;
+        font-weight: bold !important;
+        border: none !important;
+        min-width: auto !important;
+        padding: 0 !important;
+      }
+
+      /* Observações */
+      .obs-wrap {
+        padding: 4px 8px 6px !important;
+        border-top: 1px dashed #000 !important;
+        margin-top: 4px !important;
+      }
+
+      .obs-label {
+        font-size: 6.5pt !important;
+        letter-spacing: 0 !important;
+      }
+
+      .obs-input {
+        font-size: 7.5pt !important;
+        border: none !important;
+        padding: 0 !important;
+        height: auto !important;
+        font-family: 'Courier New', Courier, monospace !important;
+      }
+
+      /* Rodapé */
+      .obs-wrap::after {
+        content: '================================';
+        display: block;
+        font-size: 7pt;
+        text-align: center;
+        letter-spacing: -1px;
+        margin-top: 8px;
+        font-family: 'Courier New', monospace;
+      }
+    }
+
+    small {
+      text-align: center;
+      display: block;
+      margin-top: 32px;
+    }
+
+    small a {
+      text-decoration: none;
+      color: #332b9e;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <div class="topbar">
+    <span class="topbar-title">🍔 Sistema de Pedidos</span>
+    <a href="historico.html" class="btn-ver">Ver Pedidos</a>
+  </div>
+
+  <!-- BLOCO -->
+  <div class="bloco" id="bloco">
+
+    <div class="bloco-header"></div>
+
+    <div class="title-row">
+      <h1 class="nota-title">Nota de Compra</h1>
+      <div class="brand-box" id="brandName">LANCHE</div>
+    </div>
+
+    <!-- FIELDS -->
+    <div class="fields">
+      <div class="fields-row">
+        <div class="field-group">
+          <span class="field-label">Data</span>
+          <input class="field-input" type="text" id="data" placeholder="DD/MM/AAAA" />
+        </div>
+        <div class="field-group">
+          <span class="field-label">Nº do Pedido</span>
+          <input class="field-input" type="text" id="numPedido" readonly />
+        </div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Nome do Cliente</span>
+        <input class="field-input" type="text" id="nome" placeholder="Nome completo" />
+      </div>
+      <div class="field-group">
+        <span class="field-label">Telefone</span>
+        <input class="field-input" type="text" id="telefone" placeholder="(00) 00000-0000" />
+      </div>
+      <div class="field-group">
+        <span class="field-label">Endereço / Mesa</span>
+        <input class="field-input" type="text" id="endereco" placeholder="Endereço de entrega ou número da mesa" />
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-wrap">
+      <table id="tabela">
+        <thead>
+          <tr>
+            <th>Quant.</th>
+            <th>Descrição / Item</th>
+            <th>Unitário R$</th>
+            <th>Total R$</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+      </table>
+      <button class="add-row-btn" onclick="addRow()">+ Adicionar item</button>
+    </div>
+
+    <!-- TOTAL -->
+    <div class="total-row">
+      <span class="total-label">Total R$</span>
+      <span class="total-value" id="totalGeral">0,00</span>
+    </div>
+
+    <!-- OBS -->
+    <div class="obs-wrap">
+      <div class="obs-label">Observações</div>
+      <textarea class="obs-input" id="obs" placeholder="Observações do pedido..."></textarea>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+      <button class="btn-salvar" onclick="salvarPedido()">💾 Salvar Pedido</button>
+      <button class="btn-imprimir" onclick="imprimirPedido()">🖨️ Imprimir</button>
+    </div>
+
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <small>Desenvolvido por &lt;<a href="https://www.instagram.com/kelviny_m/">Kelviny Mickael</a>&sol;&gt;</small>
+
+  <script>
+    // ── Número do pedido ──────────────────────────────────────────
+    function getNextNum() {
+      const n = parseInt(localStorage.getItem('pedido_counter') || '0') + 1;
+      return n;
+    }
+
+    function initForm() {
+      const n = getNextNum();
+      document.getElementById('numPedido').value = String(n).padStart(4, '0');
+      const hoje = new Date();
+      document.getElementById('data').value =
+        `${String(hoje.getDate()).padStart(2,'0')}/${String(hoje.getMonth()+1).padStart(2,'0')}/${hoje.getFullYear()}`;
+      // 8 linhas iniciais
+      for(let i=0;i<8;i++) addRow();
+    }
+
+    // ── Linhas da tabela ──────────────────────────────────────────
+    function addRow() {
+      const tbody = document.getElementById('tbody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="number" min="0" placeholder="" oninput="calcTotal()" /></td>
+        <td><input type="text" placeholder="" /></td>
+        <td><input type="number" min="0" step="0.01" placeholder="0,00" oninput="calcTotal()" /></td>
+        <td><input type="text" placeholder="0,00" readonly /></td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function calcTotal() {
+      const rows = document.querySelectorAll('#tbody tr');
+      let grand = 0;
+      rows.forEach(row => {
+        const qtd = parseFloat(row.cells[0].querySelector('input').value) || 0;
+        const unit = parseFloat(row.cells[2].querySelector('input').value) || 0;
+        const sub = qtd * unit;
+        grand += sub;
+        row.cells[3].querySelector('input').value = sub > 0 ? sub.toFixed(2).replace('.', ',') : '';
+      });
+      document.getElementById('totalGeral').textContent = grand.toFixed(2).replace('.', ',');
+    }
+
+    // ── Salvar pedido ─────────────────────────────────────────────
+    function salvarPedido() {
+      const num = document.getElementById('numPedido').value;
+      const rows = [];
+      document.querySelectorAll('#tbody tr').forEach(row => {
+        const qtd  = row.cells[0].querySelector('input').value;
+        const desc = row.cells[1].querySelector('input').value;
+        const unit = row.cells[2].querySelector('input').value;
+        const tot  = row.cells[3].querySelector('input').value;
+        if(qtd || desc) rows.push({ qtd, desc, unit, tot });
+      });
+
+      const pedido = {
+        id: num,
+        data: document.getElementById('data').value,
+        nome: document.getElementById('nome').value,
+        telefone: document.getElementById('telefone').value,
+        endereco: document.getElementById('endereco').value,
+        obs: document.getElementById('obs').value,
+        itens: rows,
+        total: document.getElementById('totalGeral').textContent,
+        salvoEm: new Date().toISOString()
+      };
+
+      // salvar no array
+      let pedidos = JSON.parse(localStorage.getItem('pedidos') || '[]');
+      // evita duplicata pelo id
+      pedidos = pedidos.filter(p => p.id !== num);
+      pedidos.unshift(pedido);
+      localStorage.setItem('pedidos', JSON.stringify(pedidos));
+      localStorage.setItem('pedido_counter', parseInt(num));
+
+      showToast('Pedido #' + num + ' salvo com sucesso!');
+    }
+
+    // ── Imprimir ──────────────────────────────────────────────────
+    function imprimirPedido() {
+      salvarPedido();
+      setTimeout(() => window.print(), 300);
+    }
+
+    // ── Toast ─────────────────────────────────────────────────────
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2800);
+    }
+
+    initForm();
+  </script>
+</body>
+</html>
