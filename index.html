@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pastelô Pedidos</title>
-  <link rel="shortcut icon" href="/img/pastelo.jpg" type="image/x-icon">
+  <title>Bloco de Pedidos</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -383,11 +382,12 @@
         box-shadow: none !important;
       }
 
-      /* Cabeçalho preto (funciona em térmica) */
+      /* Cabeçalho: fundo BRANCO, borda preta — 100% seguro em térmica */
       .bloco-header {
-        background: #000 !important;
-        height: 28px !important;
-        padding: 6px 8px 0 !important;
+        background: #fff !important;
+        height: auto !important;
+        padding: 4px 8px !important;
+        border-bottom: 2px solid #000 !important;
       }
       .bloco-header::after { display: none !important; }
 
@@ -462,12 +462,14 @@
       thead th:nth-child(4) { width: 16mm; }
 
       thead th {
-        background: #000 !important;
-        color: #fff !important;
+        background: #fff !important;
+        color: #000 !important;
         font-size: 6.5pt !important;
+        font-weight: bold !important;
         padding: 2px 2px !important;
         letter-spacing: 0 !important;
-        border: none !important;
+        border-top: 1px solid #000 !important;
+        border-bottom: 2px solid #000 !important;
         overflow: hidden;
         white-space: nowrap;
       }
@@ -534,25 +536,13 @@
         font-family: 'Courier New', monospace;
       }
     }
-
-    small {
-      text-align: center;
-      display: block;
-      margin-top: 32px;
-    }
-
-    small a {
-      text-decoration: none;
-      color: #332b9e;
-    }
-
   </style>
 </head>
 <body>
 
   <!-- TOP NAV -->
   <div class="topbar">
-    <span class="topbar-title">🍔 Sistema de Pedidos Pastelô</span>
+    <span class="topbar-title">🍔 Sistema de Pedidos</span>
     <a href="historico.html" class="btn-ver">Ver Pedidos</a>
   </div>
 
@@ -630,8 +620,6 @@
   </div>
 
   <div class="toast" id="toast"></div>
-
-  <small>Desenvolvido por &lt;<a href="https://www.instagram.com/kelviny_m/">Kelviny Mickael</a>&sol;&gt;</small>
 
   <script>
     // ── Número do pedido ──────────────────────────────────────────

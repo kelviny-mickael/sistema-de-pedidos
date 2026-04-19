@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pastelô Pedidos</title>
-  <link rel="shortcut icon" href="/img/pastelo.jpg" type="image/x-icon">
+  <title>Histórico de Pedidos</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -373,25 +372,25 @@
         page-break-inside: avoid;
       }
 
-      /* Cabeçalho do cupom: fundo preto é aceito em térmica */
+      /* Cabeçalho: fundo BRANCO, texto PRETO — 100% seguro em térmica */
       .card-header {
-        background: #000 !important;
-        color: #fff !important;
+        background: #fff !important;
+        color: #000 !important;
         padding: 4px 4px !important;
         font-size: 9pt !important;
         font-weight: bold;
         display: flex !important;
         justify-content: space-between;
-        border: none !important;
+        border-bottom: 2px solid #000 !important;
       }
 
       .card-header-left,
       .card-header .card-right { gap: 6px !important; }
 
-      .card-num   { font-size: 9pt !important; }
+      .card-num   { font-size: 10pt !important; font-weight: bold !important; color: #000 !important; }
       .card-cliente,
       .card-data,
-      .card-total { font-size: 7.5pt !important; }
+      .card-total { font-size: 8pt !important; color: #000 !important; }
 
       /* Corpo do cupom */
       .card-body {
@@ -448,12 +447,13 @@
       thead th:nth-child(4) { width: 16mm; }
 
       thead th {
-        background: #000 !important;
-        color: #fff !important;
+        background: #fff !important;
+        color: #000 !important;
         font-size: 6.5pt !important;
         padding: 2px 2px !important;
         text-align: left;
-        border: none !important;
+        border-bottom: 2px solid #000 !important;
+        border-top: 1px solid #000 !important;
         font-weight: bold;
         letter-spacing: 0 !important;
         text-transform: uppercase;
@@ -519,18 +519,6 @@
         font-family: 'Courier New', monospace;
       }
     }
-
-    small {
-      text-align: center;
-      display: block;
-      margin-top: 32px;
-    }
-
-    small a {
-      text-decoration: none;
-      color: #332b9e;
-    }
-
   </style>
 </head>
 <body>
@@ -564,8 +552,6 @@
 
   <!-- LISTA -->
   <div class="lista" id="lista"></div>
-
-  <small>Desenvolvido por &lt;<a href="https://www.instagram.com/kelviny_m/">Kelviny Mickael</a>&sol;&gt;</small>
 
   <script>
     function getPedidos() {
