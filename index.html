@@ -456,9 +456,9 @@
         table-layout: fixed !important;
       }
 
-      thead th:nth-child(1) { width: 10mm; }
-      thead th:nth-child(2) { width: 30mm; }
-      thead th:nth-child(3) { width: 14mm; }
+      thead th:nth-child(1) { width: 12mm; }
+      thead th:nth-child(2) { width: 28mm; }
+      thead th:nth-child(3) { width: 16mm; }
       thead th:nth-child(4) { width: 16mm; }
 
       thead th {
@@ -572,10 +572,7 @@
         <span class="field-label">Nome do Cliente</span>
         <input class="field-input" type="text" id="nome" placeholder="Nome completo" />
       </div>
-      <div class="field-group">
-        <span class="field-label">Telefone</span>
-        <input class="field-input" type="text" id="telefone" placeholder="(00) 00000-0000" />
-      </div>
+
       <div class="field-group">
         <span class="field-label">Endereço / Mesa</span>
         <input class="field-input" type="text" id="endereco" placeholder="Endereço de entrega ou número da mesa" />
@@ -680,7 +677,7 @@
         id: num,
         data: document.getElementById('data').value,
         nome: document.getElementById('nome').value,
-        telefone: document.getElementById('telefone').value,
+
         endereco: document.getElementById('endereco').value,
         obs: document.getElementById('obs').value,
         itens: rows,
