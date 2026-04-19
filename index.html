@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Bloco de Pedidos</title>
+  <link rel="shortcut icon" href="/img/pastelo.jpg" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -456,10 +457,10 @@
         table-layout: fixed !important;
       }
 
-      thead th:nth-child(1) { width: 8mm; }
-      thead th:nth-child(2) { width: 36mm; }
-      thead th:nth-child(3) { width: 14mm; }
-      thead th:nth-child(4) { width: 14mm; }
+      thead th:nth-child(1) { width: 7mm; }
+      thead th:nth-child(2) { width: 33mm; }
+      thead th:nth-child(3) { width: 16mm; }
+      thead th:nth-child(4) { width: 16mm; }
 
       thead th {
         background: #fff !important;
@@ -479,6 +480,7 @@
         border-bottom: 1px dotted #aaa !important;
         padding: 2px 2px !important;
         font-size: 7.5pt !important;
+        font-weight: bold !important;
         word-break: break-word;
         white-space: normal !important;
         overflow-wrap: break-word;
@@ -521,6 +523,7 @@
 
       .obs-input {
         font-size: 7.5pt !important;
+        font-weight: bold !important;
         border: none !important;
         padding: 0 !important;
         height: auto !important;
@@ -549,7 +552,6 @@
       text-decoration: none;
       color: #332b9e;
     }
-
   </style>
 </head>
 <body>
@@ -658,8 +660,8 @@
       tr.innerHTML = `
         <td><input type="number" min="0" placeholder="" oninput="calcTotal()" /></td>
         <td><input type="text" placeholder="" /></td>
-        <td><input type="number" min="0" step="0.01" placeholder="0,00" oninput="calcTotal()" /></td>
-        <td><input type="text" placeholder="0,00" readonly /></td>
+        <td><input type="number" min="0" step="0.01" placeholder="0,00" oninput="calcTotal()" style="text-align:right" /></td>
+        <td><input type="text" placeholder="0,00" readonly style="text-align:right" /></td>
       `;
       tbody.appendChild(tr);
     }
