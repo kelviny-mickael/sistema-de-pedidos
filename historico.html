@@ -389,9 +389,9 @@
       .card-header .card-right { gap: 6px !important; }
 
       .card-num   { font-size: 10pt !important; font-weight: bold !important; color: #000 !important; }
-      .card-cliente,
-      .card-data,
-      .card-total { font-size: 8pt !important; color: #000 !important; }
+      .card-cliente { font-size: 9pt !important; font-weight: bold !important; color: #000 !important; }
+      .card-data    { font-size: 9pt !important; font-weight: bold !important; color: #000 !important; }
+      .card-total   { font-size: 9pt !important; font-weight: bold !important; color: #000 !important; }
 
       /* Corpo do cupom */
       .card-body {
@@ -513,6 +513,21 @@
       }
 
       /* Rodapé automático após cada cupom */
+      small {
+        display: block !important;
+        text-align: center !important;
+        font-size: 7pt !important;
+        font-weight: bold !important;
+        margin-top: 6px !important;
+        color: #000 !important;
+      }
+
+      small a {
+        color: #000 !important;
+        text-decoration: none !important;
+        font-weight: bold !important;
+      }
+
       .card-body::after {
         content: '================================';
         display: block;
